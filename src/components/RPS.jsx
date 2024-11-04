@@ -3,6 +3,7 @@ import paper from '../assets/paper.png';
 import rock from '../assets/rock.png';
 import scissor from '../assets/scissor.png';
 import PopupModal from './PopupModal';
+import Button from './Button';
 
 export default function RPS() {
     const [userChoice, setUserChoice] = useState("");
@@ -21,11 +22,6 @@ export default function RPS() {
             paper: 1,
             scissor: 2,
         };
-
-        if (userChoice === "") {
-            setGameState(-1);
-            return;
-        }
 
         const userVal = choices[userChoice.trim().toLowerCase()] ?? -1;
 
@@ -66,9 +62,6 @@ export default function RPS() {
         setUserChoice("");
     }
 
-    if(gameState === -1)
-        message = "Enter a valid choice: rock, paper, or scissor"
-
     if (gameState === 1) 
         message = "You win!";
 
@@ -79,7 +72,7 @@ export default function RPS() {
         message = "It's a tie.";
 
     useEffect(() => {
-        if (gameState === 1 || gameState === 0 || gameState === 2 || gameState === -1) {
+        if (gameState === 1 || gameState === 0 || gameState === 2) {
             setTimeout(setModalState(true), 500);
         }
     }, [gameState]);
@@ -120,27 +113,23 @@ export default function RPS() {
                         src={image2}
                         className="w-32 h-auto transition-transform duration-500 ease-in-out transform scale-x-[-1] animation-bounce"/>
                 </div>
+                <div className = "space-x-4 pb-2">
+                    <Button 
+                    onClick={() => gameCode("rock")}>
+                        Rock ✊
+                    </Button>
 
-                <input
-                    type="text"
-                    id="user_choice"
-                    className="w-3/4 md:w-1/2 lg:w-1/3 p-3 bg-white bg-opacity-90 border border-gray-400 text-green-900 text-lg rounded-xl shadow-md focus:ring-4 focus:ring-green-400 focus:border-green-500 placeholder-gray-600 transition duration-300"
-                    placeholder="Enter your choice"
-                    value={userChoice}
-                    onChange={(e) => setUserChoice(e.target.value)}
-                    onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                            gameCode(userChoice);
-                        }
-                    }}/>
+                    <Button
+                    onClick={() => gameCode("paper")}>
+                        Paper ✋
+                    </Button>
 
-                <button
-                    className="mt-4 px-6 py-2 bg-green-500 text-white text-lg rounded-xl shadow-md hover:bg-green-600 active:bg-green-700 transition duration-300 transform hover:scale-105 active:scale-95 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50"
-                    onClick={() => {
-                        setTimeout(() => gameCode(userChoice), 300)
-                    }}>
-                    Submit
-                </button>
+                    <Button 
+                    onClick={() => gameCode("scissor")}>
+                        Scissor ✌
+                    </Button>
+                </div>
+                
                 <div 
                     className="text-2xl font-bold text-white bg-green-500 px-6 py-2 rounded-full shadow-lg transition-transform transform hover:scale-105">
                     Your Points: <span className="text-white">{points}</span>
