@@ -15,12 +15,12 @@ export default function Homepage() {
         const interval1 = setInterval(() => {
             const randImg = Math.floor(Math.random() * 3);
             setImage1(images[randImg]);
-        }, 1200);
+        }, 800);
     
         const interval2 = setInterval(() => {
             const randImg = Math.floor(Math.random() * 3);
             setImage2(images[randImg]);
-        }, 1200);
+        }, 800);
     
         return () => {
             clearInterval(interval1);
@@ -30,14 +30,6 @@ export default function Homepage() {
 
     return (
         <div className="min-h-screen bg-transparent flex flex-col items-center">
-            <div className="border-8 border-black p-3 mt-3">
-                <div className="text-8xl font-mono text-center 
-                                text-white border-4 p-3 border-black
-                                drop-shadow-lg animate-slight-bounce">
-                    Rock Paper Scissors
-                </div>
-            </div>
-
             <div className="flex justify-center items-center min-h-[80vh]">
                 <div className="flex-grow flex flex-col justify-center items-center space-y-8 text-black">
 
@@ -52,7 +44,7 @@ export default function Homepage() {
                         />
                     </div>
 
-                    <Link to="/game">
+                    <Link to="/gamemode">
                         <Button>Start Game</Button>
                     </Link>
                 </div>
