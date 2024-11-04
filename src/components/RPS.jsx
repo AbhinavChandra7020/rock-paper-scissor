@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import paper from '../assets/paper.png';
 import rock from '../assets/rock.png';
 import scissor from '../assets/scissor.png';
@@ -7,93 +7,64 @@ import Button from './Button';
 
 export default function RPS() {
     const [userChoice, setUserChoice] = useState("");
+    const [cpuChoice, setCpuChoice] = useState("");
     const [gameState, setGameState] = useState(null);
     const [modalState, setModalState] = useState(false);
-    const images = [paper, rock, scissor];
-    const [image1, setImage1] = useState(images[0]);
-    const [image2, setImage2] = useState(images[2]);
+    const images = { rock, paper, scissor };
     const [points, setPoints] = useState(0);
     let message = '';
 
-    async function gameCode(userChoice) {
-        const cpuChoice = Math.floor(Math.random() * 3);
-        const choices = {
-            rock: 0,
-            paper: 1,
-            scissor: 2,
-        };
+    let previousOutcome = null; 
 
-        const userVal = choices[userChoice.trim().toLowerCase()] ?? -1;
-
-        if (userVal === cpuChoice) 
-            setGameState(2);
-
-        if(userVal === 0){
-            if(cpuChoice === 1)
-                setGameState(0);
-
-            if(cpuChoice === 2){
-                setGameState(1);
-                setPoints((prevPoints) => prevPoints + 1);
-            }
-        }
-
-        if(userVal === 1){
-            if(cpuChoice === 0){
-                setGameState(1);
-                setPoints((prevPoints) => prevPoints + 1);
-            }
-
-            if(cpuChoice === 2)
-                setGameState(0);
-        }
-
-        if(userVal === 2){
-            if(cpuChoice === 0)
-                setGameState(0);
-
-            if(cpuChoice === 1){
-                setGameState(1)
-                setPoints((prevPoints) => prevPoints + 1);
-            }
-        }
+    async function gameCode(choice) {
+        const choices = ["rock", "paper", "scissor"];
+        const choicesMap = { rock: 0, paper: 1, scissor: 2 };
         
-        console.log(userVal, cpuChoice, gameState, points);
-        setUserChoice("");
+        
+        let cpuChoiceIndex;
+        if (previousOutcome === 0) {
+            
+            cpuChoiceIndex = Math.floor(Math.random() * 3);
+        } else if (previousOutcome === 1) {
+            cpuChoiceIndex = Math.random() < 0.6 ? choicesMap[cpuChoice] : Math.floor(Math.random() * 3);
+        } else if (previousOutcome === -1) {
+            cpuChoiceIndex = (choicesMap[choice] + 1) % 3;
+        } else {
+            cpuChoiceIndex = Math.floor(Math.random() * 3);
+        }
+
+        const cpuSelection = choices[cpuChoiceIndex];
+        setCpuChoice(cpuSelection);
+
+        if (!["rock", "paper", "scissor"].includes(choice)) {
+            setGameState(-1);
+            setModalState(true);
+            return;
+        }
+
+        const userVal = choicesMap[choice];
+        const cpuVal = choicesMap[cpuSelection];
+
+        if (userVal === cpuVal) {
+            setGameState(2);
+            previousOutcome = 0; 
+        } else if ((userVal === 0 && cpuVal === 1) || (userVal === 1 && cpuVal === 2) || (userVal === 2 && cpuVal === 0)) {
+            setGameState(0); 
+            previousOutcome = 1;
+        } else {
+            setGameState(1); 
+            setPoints((prevPoints) => prevPoints + 1);
+            previousOutcome = -1;
+        }
+
+        setModalState(true);
     }
 
-    if (gameState === 1) 
-        message = "You win!";
+    if (gameState === -1) message = "Enter a valid choice: rock, paper, or scissor";
+    else if (gameState === 1) message = "You win!";
+    else if (gameState === 0) message = "You lose.";
+    else if (gameState === 2) message = "It's a tie.";
 
-    if (gameState === 0) 
-        message = "You lose.";
-
-    if (gameState === 2) 
-        message = "It's a tie.";
-
-    useEffect(() => {
-        if (gameState === 1 || gameState === 0 || gameState === 2) {
-            setTimeout(setModalState(true), 500);
-        }
-    }, [gameState]);
-
-    useEffect(() => {
-        const interval1 = setInterval(() => {
-            const randImg = Math.floor(Math.random() * 3);
-            setImage1(images[randImg]);
-        }, 1200);
-    
-        const interval2 = setInterval(() => {
-            const randImg = Math.floor(Math.random() * 3);
-            setImage2(images[randImg]);
-        }, 1200);
-    
-        return () => {
-            clearInterval(interval1);
-            clearInterval(interval2);
-        };
-    }, [images]);
-    
     const handleCloseModal = () => {
         setModalState(false);
         setGameState(null);
@@ -105,31 +76,27 @@ export default function RPS() {
                 Rock Paper Scissors
             </div>
             <div className="flex-grow flex flex-col justify-center items-center space-y-8 text-black">
-                <div className="flex space-x-4">
+                <div className="flex space-x-4 h-32">
                     <img
-                        src={image1}
-                        className="w-32 h-auto transition-transform duration-500 ease-in-out transform animation-shake"/>
+                        src={images[userChoice] || rock}  
+                        className="w-32 h-32 object-contain transition-transform duration-500 ease-in-out transform"
+                    />
                     <img
-                        src={image2}
-                        className="w-32 h-auto transition-transform duration-500 ease-in-out transform scale-x-[-1] animation-bounce"/>
+                        src={images[cpuChoice] || rock}
+                        className="w-32 h-32 object-contain transition-transform duration-500 ease-in-out transform scale-x-[-1]"
+                    />
                 </div>
-                <div className = "space-x-4 pb-2">
-                    <Button 
-                    onClick={() => gameCode("rock")}>
-                        Rock ✊
-                    </Button>
-
-                    <Button
-                    onClick={() => gameCode("paper")}>
-                        Paper ✋
-                    </Button>
-
-                    <Button 
-                    onClick={() => gameCode("scissor")}>
-                        Scissor ✌
-                    </Button>
+                <div className="space-x-4 pb-2">
+                    <Button onClick={() => setUserChoice("rock")}>Rock ✊</Button>
+                    <Button onClick={() => setUserChoice("paper")}>Paper ✋</Button>
+                    <Button onClick={() => setUserChoice("scissor")}>Scissor ✌</Button>
                 </div>
-                
+                <Button onClick={() => gameCode(userChoice)}>Submit Choice</Button>
+
+                <div className="bg-green-800 bg-opacity-60 text-white text-xl font-semibold py-3 px-6 rounded-lg shadow-md mt-4">
+                    Your Choice: <span className="capitalize">{userChoice || "None"}</span>
+                </div>
+
                 <div 
                     className="text-2xl font-bold text-white bg-green-500 px-6 py-2 rounded-full shadow-lg transition-transform transform hover:scale-105">
                     Your Points: <span className="text-white">{points}</span>
