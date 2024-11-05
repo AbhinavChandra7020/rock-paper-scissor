@@ -6,7 +6,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 w-full z-50">
       <div className="container mx-auto py-4 px-8">
         <div className="flex items-center justify-center">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wider text-center
+          <div className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wider text-center
                          relative
                          animate-pulse
                          bg-clip-text text-transparent 
@@ -16,12 +16,7 @@ const Header = () => {
                          transition-all duration-300
                          hover:scale-105">
             Rock Paper Scissors
-            <span className="absolute inset-0 text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-wider text-center
-                           text-transparent
-                           [-webkit-text-stroke:1px_rgba(34,197,94,0.3)]">
-              Rock Paper Scissors
-            </span>
-          </h1>
+          </div>
         </div>
       </div>
     </header>

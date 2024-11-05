@@ -1,8 +1,48 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Rock Paper Scissors
 
-Currently, two official plugins are available:
+Welcome to Rock Paper Scissors. The classic game that all of us are familiar with. But if you are even slightly confused here are the basic rules.
+- It is played by two players
+- Each player chooses either rock, paper, or scissors.
+- Rock beats scissors, paper beats rock, and scissors beats paper.
+- If both players choose the same options, the game ends in a tie.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Thats it! Those are the basic simple rules. But, don't worry, the game won't be as simple. The CPU would not just randomly throw rock, paper or scissors, It will act according to how you play and try to beat you in the best way possible. So have fun and enjoy the game.
+
+# Game Modes
+
+1. Best of 3
+2. Best of 5
+3. Endless
+
+
+## Installation
+
+You can run the project by either:
+
+**Cloning the repository**
+
+Run the following commands
+
+```bash 
+git clone https://github.com/AbhinavChandra7020/rock-paper-scissor.git
+cd rock-paper-scissor
+npm install 
+npm run dev
+```
+
+**Downloading the zip File**
+
+Extract your file at your desired location then run the following commands:
+
+```bash
+cd rock-paper-scissor
+npm install 
+npm run dev
+```
+## Tech Stack
+
+**Client:** React, TailwindCSS
+
+**Server:** Node
+
