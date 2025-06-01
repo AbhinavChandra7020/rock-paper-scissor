@@ -12,7 +12,7 @@ Thats it! Those are the basic simple rules. But, don't worry, the game won't be 
 [Play here](https://rock-paper-scissor-seven-flame.vercel.app/)
 
 ## YouTube Demo
-[Watch the Demo](https://www.youtube.com/watch?v=q_ceoztWyQ8)
+[![Watch the video](https://img.youtube.com/vi/q_ceoztWyQ8/0.jpg)](https://www.youtube.com/watch?v=q_ceoztWyQ8)
 
 
 
