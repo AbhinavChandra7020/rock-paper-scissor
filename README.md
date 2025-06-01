@@ -1,4 +1,3 @@
-
 # Rock Paper Scissors
 
 Welcome to Rock Paper Scissors. The classic game that all of us are familiar with. But if you are even slightly confused here are the basic rules.
@@ -8,6 +7,15 @@ Welcome to Rock Paper Scissors. The classic game that all of us are familiar wit
 - If both players choose the same options, the game ends in a tie.
 
 Thats it! Those are the basic simple rules. But, don't worry, the game won't be as simple. The CPU would not just randomly throw rock, paper or scissors, It will act according to how you play and try to beat you in the best way possible. So have fun and enjoy the game.
+
+## Live Website
+[Play here](https://rock-paper-scissor-seven-flame.vercel.app/)
+
+## YouTube Demo
+[Watch the Demo](https://www.youtube.com/watch?v=q_ceoztWyQ8)
+
+
+
 
 # Game Modes
 
