@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import Gamemode from './components/Gamemode';
 import RPS from './components/RPS';
@@ -11,22 +11,34 @@ const loadGameMode = ({ request }) => {
     return { mode, targetPoints };
 };
 
+function Layout() {
+  return (
+    <div>
+      <Header />
+      <Outlet />
+    </div>
+  );
+}
+
 const router = createBrowserRouter([
-    { path: "/", element: <Homepage /> },
-    { path: "/home", element: <Homepage /> },
-    { path: "/gamemode", element: <Gamemode /> },
-    {
-        path: "/game",
+  {
+    path: "/",
+    element: <Layout />, // Wrap everything with Layout
+    children: [
+      { index: true, element: <Homepage /> },
+      { path: "home", element: <Homepage /> },
+      { path: "gamemode", element: <Gamemode /> },
+      {
+        path: "game",
         element: <RPS />,
         loader: loadGameMode,
-    },
+      },
+    ],
+  },
 ]);
 
 export default function App() {
     return (
-      <div>
-        <Header />
-        <RouterProvider router={router} />
-      </div>
+      <RouterProvider router={router} />
     );
 }
