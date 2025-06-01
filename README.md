@@ -51,6 +51,6 @@ npm run dev
 ## Tech Stack
 
 **Client:** React, TailwindCSS
-
+**Algorithm:** CPU uses Weighted Random to add more unpredictability
 **Server:** Node
 
